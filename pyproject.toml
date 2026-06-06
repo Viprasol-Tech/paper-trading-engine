@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "paper-trading-engine"
-version = "0.1.0"
+version = "0.2.0"
 description = "Simulated paper-trading / execution engine with positions and PnL — by Viprasol Tech."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -18,6 +18,11 @@ keywords = [
   "python",
   "trading",
   "quant",
+  "limit-orders",
+  "order-book",
+  "portfolio",
+  "pnl",
+  "slippage",
 ]
 classifiers = [
   "Development Status :: 4 - Beta",
