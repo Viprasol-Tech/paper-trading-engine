@@ -66,21 +66,21 @@ from paper_trading_engine import PaperEngine, PercentageFee, PercentageSlippage,
 
 engine = PaperEngine(
     starting_cash=10_000.0,
-    fee_model=PercentageFee(0.001),         # 10 bps commission
+    fee_model=PercentageFee(0.001),  # 10 bps commission
     slippage_model=PercentageSlippage(0.0005),  # 5 bps adverse slippage
     allow_short=True,
 )
 
 engine.submit_market_order("AAPL", Side.BUY, qty=10.0, price=100.0)
-engine.submit_market_order("AAPL", Side.BUY, qty=10.0, price=110.0)   # avg entry -> ~105
-engine.submit_market_order("AAPL", Side.SELL, qty=5.0, price=120.0)   # realizes PnL
+engine.submit_market_order("AAPL", Side.BUY, qty=10.0, price=110.0)  # avg entry -> ~105
+engine.submit_market_order("AAPL", Side.SELL, qty=5.0, price=120.0)  # realizes PnL
 
 marks = {"AAPL": 130.0}
-print(engine.position("AAPL").avg_price)   # volume-weighted entry
-print(engine.realized_pnl())               # booked on the sell
-print(engine.unrealized_pnl(marks))        # open PnL vs. mark
-print(engine.total_pnl(marks))             # realized + unrealized - fees
-print(engine.equity(marks))                # cash + marked positions
+print(engine.position("AAPL").avg_price)  # volume-weighted entry
+print(engine.realized_pnl())  # booked on the sell
+print(engine.unrealized_pnl(marks))  # open PnL vs. mark
+print(engine.total_pnl(marks))  # realized + unrealized - fees
+print(engine.equity(marks))  # cash + marked positions
 ```
 
 ### Limit orders & partial fills
@@ -88,9 +88,9 @@ print(engine.equity(marks))                # cash + marked positions
 ```python
 # A non-marketable limit rests; fill it as liquidity arrives.
 order = engine.submit_limit_order("MSFT", Side.BUY, qty=10.0, limit_price=95.0, market_price=100.0)
-assert order.status.value == "new"          # rests
-engine.fill_resting_order(order, qty=4.0, price=95.0)   # partial
-engine.fill_resting_order(order, qty=6.0, price=94.0)   # completes
+assert order.status.value == "new"  # rests
+engine.fill_resting_order(order, qty=4.0, price=95.0)  # partial
+engine.fill_resting_order(order, qty=6.0, price=94.0)  # completes
 assert order.status.value == "filled"
 ```
 
